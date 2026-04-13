@@ -185,20 +185,32 @@
  */
 
 // import mongoose
+import mongoose from "mongoose";
 
 // establish connection
-
+mongoose.connect("mongodb+srv://<username>:<password>@cluster0.../labDB")
+    .then(() => console.log("Connected"))
+    .catch(err => console.log(err));
 
 // define schema
-
+studentSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    major: String
+  });
+  const Student = mongoose.model("Student", studentSchema);
 
 // create document
+await Student.insertMany([{ name: "Leen", age: 21, major: "CS" }, { name: "Sara", age: 23, major: "SE" }]);
 
 
 // read document
+const all = await Student.find();
 
 
 // update document
+await Student.updateOne({ name: "Ali" }, { age: 22 });
 
 
 // delete document
+await Student.deleteOne({ name: "Sara" });
